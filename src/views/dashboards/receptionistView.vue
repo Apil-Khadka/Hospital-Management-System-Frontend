@@ -1,11 +1,9 @@
-<template>
-  <div>
-    <h1>This is an receptionist panel</h1>
-  </div>
-</template>
-
 <script setup lang="ts">
+import PatientAppointmentReceptionistShow from '@/components/Appointment/Receptionist/PatientAppointmentReceptionistShow.vue'
 </script>
 
-<style scoped>
-</style>
+<template>
+  <PatientAppointmentReceptionistShow />
+</template>
+
+<style scoped></style>

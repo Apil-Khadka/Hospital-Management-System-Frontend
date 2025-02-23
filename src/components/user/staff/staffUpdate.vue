@@ -6,8 +6,8 @@ import { useAuthStore } from '@/stores/authStore.ts'
 
 const staffStore = useMethodStore()
 const departmentStore = useMethodStore()
-const authStore = useAuthStore();
-const staffId = ref<number>(0);
+const authStore = useAuthStore()
+const staffId = ref<number>(0)
 const form = ref({
   department_id: null,
   specialization: '',
@@ -24,21 +24,23 @@ const form = ref({
   shift_details: '',
   emergency_contact_name: '',
   emergency_contact_relationship: '',
-  emergency_contact_phone: ''
+  emergency_contact_phone: '',
 })
 const originalForm = ref({ ...form.value })
-const departments = ref<Array<{ id: number, name: string }>>([])
+const departments = ref<Array<{ id: number; name: string }>>([])
+const staffs = ref<Array<{ id: number; name: string }>>([])
 
 onMounted(async () => {
   const userInfo = await authStore.userInfo()
   staffId.value = userInfo.user.detail.id
   await staffStore.fetchMethodDetail('staff', staffId.value)
+  staffs.value = staffStore.getDetail['staff']?.data
   await departmentStore.fetchMethodAll('department')
-  departments.value = departmentStore.infoAll?.data
+  departments.value = departmentStore.getDetailAll['department']?.data
 
-  if (staffStore.infoDetail) {
-    form.value = { ...staffStore.infoDetail.data }
-    originalForm.value = { ...staffStore.infoDetail.data }
+  if (staffs) {
+    form.value = { ...staffs }
+    originalForm.value = { ...staffs }
   }
 })
 
@@ -139,7 +141,11 @@ async function updateStaff() {
       </div>
       <div>
         <label for="emergency_contact_relationship">Emergency Contact Relationship:</label>
-        <input type="text" id="emergency_contact_relationship" v-model="form.emergency_contact_relationship" />
+        <input
+          type="text"
+          id="emergency_contact_relationship"
+          v-model="form.emergency_contact_relationship"
+        />
       </div>
       <div>
         <label for="emergency_contact_phone">Emergency Contact Phone:</label>

@@ -5,12 +5,13 @@ import { useMethodStore } from '@/stores/Methods.ts'
 import { useAuthStore } from '@/stores/authStore.ts'
 
 const userStore = useMethodStore()
-const authStore = useAuthStore();
-const userId = ref<number>(0);
+const authStore = useAuthStore()
+const user = ref<Record<string, unknown> | null>(null)
+const userId = ref<number>(0)
 const form = ref({
   firstname: '',
   lastname: '',
-  password: ''
+  password: '',
 })
 const originalForm = ref({ firstname: '', lastname: '' })
 
@@ -18,20 +19,28 @@ onMounted(async () => {
   const userInfo = await authStore.userInfo()
   userId.value = userInfo.user.id
   await userStore.fetchMethodDetail('user', userId.value)
+  user.value = userStore.getDetail('user')?.data || null
 
-  if (userStore.infoDetail) {
-    form.value.firstname = userStore.infoDetail.data.firstname
-    form.value.lastname = userStore.infoDetail.data.lastname
+  if (user.value) {
+    form.value.firstname = user.value.firstname
+    form.value.lastname = user.value.lastname
     originalForm.value = { ...form.value }
   }
 })
 
 function getChangedFields() {
-  const changedFields = {}
+  const changedFields: Partial<typeof form.value> = {}
   for (const key in form.value) {
-    if (form.value[key] !== originalForm.value[key] || key === 'password') {
-      changedFields[key] = form.value[key]
+    if (
+      form.value[key as keyof typeof form.value] !==
+        originalForm.value[key as keyof typeof originalForm.value] &&
+      key !== 'password'
+    ) {
+      changedFields[key as keyof typeof form.value] = form.value[key as keyof typeof form.value]
     }
+  }
+  if (form.value.password) {
+    changedFields.password = form.value.password
   }
   return changedFields
 }

@@ -5,8 +5,9 @@ import { useMethodStore } from '@/stores/Methods.ts'
 import { useAuthStore } from '@/stores/authStore.ts'
 
 const patientStore = useMethodStore()
-const authStore = useAuthStore();
-const patientId = ref<number>(0);
+const authStore = useAuthStore()
+const patient = ref<any>(null)
+const patientId = ref<number>(0)
 const form = ref({
   date_of_birth: '',
   gender: '',
@@ -15,7 +16,7 @@ const form = ref({
   phone: '',
   emergency_contact_name: '',
   emergency_contact_phone: '',
-  emergency_contact_relationship: ''
+  emergency_contact_relationship: '',
 })
 const originalForm = ref({ ...form.value })
 
@@ -23,9 +24,10 @@ onMounted(async () => {
   const userInfo = await authStore.userInfo()
   patientId.value = userInfo.user.detail.id
   await patientStore.fetchMethodDetail('patient', patientId.value)
-  if (patientStore.patientDetail) {
-    form.value = { ...patientStore.patientDetail.data }
-    originalForm.value = { ...patientStore.patientDetail.data }
+  patient.value = patientStore.getDetail('patient')?.data || null
+  if (patient.value) {
+    form.value = { ...patient.value }
+    originalForm.value = { ...patient.value }
   }
 })
 
@@ -43,7 +45,7 @@ async function updatePatient() {
   const payload = getChangedFields()
   if (Object.keys(payload).length > 0) {
     await patientStore.updateMethodDetail('patient', patientId.value, payload)
-    // window.location.reload()
+    window.location.reload()
   }
 }
 </script>
@@ -97,7 +99,11 @@ async function updatePatient() {
       </div>
       <div>
         <label for="emergency_contact_relationship">Emergency Contact Relationship:</label>
-        <input type="text" id="emergency_contact_relationship" v-model="form.emergency_contact_relationship" />
+        <input
+          type="text"
+          id="emergency_contact_relationship"
+          v-model="form.emergency_contact_relationship"
+        />
       </div>
       <button type="submit">Update</button>
     </form>

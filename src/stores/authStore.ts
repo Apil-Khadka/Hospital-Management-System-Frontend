@@ -32,6 +32,9 @@ export const useAuthStore = defineStore('auth', {
         case 'nurse':
           router.push('/nurse')
           break
+        case 'receptionist':
+          router.push('/receptionist')
+          break
         default:
           router.push('/dashboard')
       }
@@ -46,12 +49,12 @@ export const useAuthStore = defineStore('auth', {
     },
     async userInfo() {
       try {
-        const apiStore = useApiStore();
-        const response = await apiStore.apiFetch('GET', 'api/auth/info');
-        const data = await response.json();
-        return data;
+        const apiStore = useApiStore()
+        const response = await apiStore.apiFetch('GET', 'api/auth/info')
+        const data = await response.json()
+        return data
       } catch (error) {
-        console.error('Error fetching user info:', error);
+        console.error('Error fetching user info:', error)
       }
     },
   },

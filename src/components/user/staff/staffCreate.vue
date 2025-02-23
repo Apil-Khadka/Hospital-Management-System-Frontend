@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import userItem from '../userItem.vue';
+import userItem from '../userItem.vue'
 import { useMethodStore } from '@/stores/Methods.ts'
 import { useAuthStore } from '@/stores/authStore.ts'
 
 const staffStore = useMethodStore()
-const authStore = useAuthStore();
+const authStore = useAuthStore()
 
 const form = ref({
   user_id: null,
@@ -24,22 +24,22 @@ const form = ref({
   shift_details: '',
   emergency_contact_name: '',
   emergency_contact_relationship: '',
-  emergency_contact_phone: ''
+  emergency_contact_phone: '',
 })
 
-const departments = ref<Array<{ id: number, name: string }>>([])
+const departments = ref<Array<{ id: number; name: string }>>([])
 
 onMounted(async () => {
   const userInfo = await authStore.userInfo()
   form.value.user_id = userInfo.user.id
   await staffStore.fetchMethodAll('department')
-  departments.value = staffStore.infoAll?.data
+  departments.value = staffStore.getDetailAll('department')?.data
 })
 
 async function createStaff() {
   const payload = { ...form.value }
   await staffStore.createMethodDetail('staff', payload)
-  window.location.reload();
+  window.location.reload()
 }
 </script>
 
@@ -119,15 +119,30 @@ async function createStaff() {
       </div>
       <div>
         <label for="emergency_contact_name">Emergency Contact Name:</label>
-        <input type="text" id="emergency_contact_name" v-model="form.emergency_contact_name" required />
+        <input
+          type="text"
+          id="emergency_contact_name"
+          v-model="form.emergency_contact_name"
+          required
+        />
       </div>
       <div>
         <label for="emergency_contact_relationship">Emergency Contact Relationship:</label>
-        <input type="text" id="emergency_contact_relationship" v-model="form.emergency_contact_relationship" required />
+        <input
+          type="text"
+          id="emergency_contact_relationship"
+          v-model="form.emergency_contact_relationship"
+          required
+        />
       </div>
       <div>
         <label for="emergency_contact_phone">Emergency Contact Phone:</label>
-        <input type="tel" id="emergency_contact_phone" v-model="form.emergency_contact_phone" required />
+        <input
+          type="tel"
+          id="emergency_contact_phone"
+          v-model="form.emergency_contact_phone"
+          required
+        />
       </div>
       <button type="submit">Create</button>
     </form>
