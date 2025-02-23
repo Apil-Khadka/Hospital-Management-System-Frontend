@@ -3,6 +3,8 @@ import PatientView from '@/views/dashboards/patientView.vue'
 import DoctorView from '@/views/dashboards/doctorView.vue'
 import NurseView from '@/views/dashboards/nurseView.vue'
 import receptionistView from '@/views/dashboards/receptionistView.vue'
+import PatientProfile from '@/components/profile/PatientProfile.vue'
+import PatientAppointment from '@/components/Appointment/Patient/PatientAppointment.vue'
 
 const routes = [
   // {
@@ -18,8 +20,20 @@ const routes = [
   {
     path: '/patient',
     component: PatientView,
-    meta: { requiresAuth: true, role: 'patient' }
-  },
+    meta: { requiresAuth: true, role: 'patient' },
+    children: [
+      {
+        path: 'profile',
+        component: PatientProfile,
+        meta: { requiresAuth: true, role: 'patient' },
+      },
+      {
+        path: 'appointment',
+        component: PatientAppointment,
+        meta: { requiresAuth: true, role: 'patient' },
+      },
+    ],
+    },
   {
     path: '/doctor',
     component: DoctorView,

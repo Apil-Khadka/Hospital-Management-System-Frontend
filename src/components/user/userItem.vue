@@ -34,4 +34,7 @@
 .user-item-body {
   padding: 16px;
 }
+strong {
+  color: #2ac166;
+}
 </style>
