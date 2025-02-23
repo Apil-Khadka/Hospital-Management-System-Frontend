@@ -1,18 +1,11 @@
 <script setup lang="ts">
-import { useApiStore } from '@/stores/api.ts'
 
-const apiStore = useApiStore()
-const response =  apiStore.apiFetch('GET', `api/auth/info`)
-console.log(response)
+import PatientMain from '@/components/user/patient/patientMain.vue'
 </script>
+
 <template>
-  <div>
-    <h1>This is an patient panel</h1>
-  </div>
+  <patient-main></patient-main>
 </template>
-
-<script setup lang="ts">
-</script>
 
 <style scoped>
 </style>

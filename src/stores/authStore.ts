@@ -2,6 +2,7 @@
 import { defineStore } from 'pinia'
 import router from '@/router'
 import { ref } from 'vue'
+import { useApiStore } from '@/stores/api.ts'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -42,6 +43,16 @@ export const useAuthStore = defineStore('auth', {
     isLoggedIn() {
       const auth_token = ref(sessionStorage.getItem('auth_token') || null)
       return ref(!!auth_token.value)
+    },
+    async userInfo() {
+      try {
+        const apiStore = useApiStore();
+        const response = await apiStore.apiFetch('GET', 'api/auth/info');
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error('Error fetching user info:', error);
+      }
     },
   },
 })
