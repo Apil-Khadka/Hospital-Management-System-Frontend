@@ -7,28 +7,26 @@ export const useApiStore = defineStore('api', {
     token: sessionStorage.getItem('auth_token') || null,
   }),
   actions: {
-    async apiFetch(url: string, options: RequestInit = {}): Promise<Response> {
-      // Default options with common headers
+    async apiFetch(method: 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE', url: string, body: any = null): Promise<Response> {
+      // Default URL and headers
+      const fetchUrl = `${import.meta.env.VITE_API_URL}/${url}`;
       const defaultOptions: RequestInit = {
+        method: method,  // Set the HTTP method (GET, POST, PATCH, etc.)
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
           // Optionally include an auth header if a token is available
           ...(this.token ? { 'Authorization': `Bearer ${this.token}` } : {}),
         },
+      };
+
+      // Add body content for POST, PATCH, and PUT methods
+      if (body && (method === 'POST' || method === 'PATCH' || method === 'PUT')) {
+        defaultOptions.body = JSON.stringify(body);
       }
 
-      // Merge default options with any provided options
-      const mergedOptions: RequestInit = {
-        ...defaultOptions,
-        ...options,
-        headers: {
-          ...defaultOptions.headers,
-          ...(options.headers || {}),
-        },
-      }
-
-      return fetch(url, mergedOptions)
+      // Return the fetch call with merged options
+      return fetch(fetchUrl, defaultOptions);
     },
   },
 })

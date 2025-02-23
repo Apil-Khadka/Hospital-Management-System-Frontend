@@ -23,7 +23,7 @@ const counter = useCounterStore()
   align-items: center;
   flex-direction: column;
   padding: 20px;
-  background-color: dark;
+  background-color: #a5a583;
 }
 
 .about {

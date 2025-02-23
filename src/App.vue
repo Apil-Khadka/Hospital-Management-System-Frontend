@@ -1,88 +1,66 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterView, RouterLink, useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/authStore.ts'
+import { ref, watch } from 'vue'
+
+// Simulate user state by checking localStorage (replace with your auth logic)
+const router = useRouter();
+const auth = useAuthStore();
+
+watch(auth.isLoggedIn, (isLoggedIn) => {
+  if (!isLoggedIn) {
+    router.push('/login');
+  }
+});
+const isLoggedIn = ref(auth.isLoggedIn());
+function logout() {
+  auth.logout();
+  router.push('/login');
+}
+
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
+  <div class="app">
+    <!-- Sidebar: Header docked on the left -->
+    <aside class="sidebar">
       <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/login">Login</RouterLink>
-        <RouterLink to="/signup">Signup</RouterLink>
-        <RouterLink to="/department">Departments</RouterLink>
+        <ul>
+          <li><RouterLink to="/">Home</RouterLink></li>
+          <li><RouterLink to="/about">About</RouterLink></li>
+          <!-- If not logged in, show Login and Signup -->
+          <li v-if="!isLoggedIn"><RouterLink to="/login">Login</RouterLink></li>
+          <li v-if="!isLoggedIn"><RouterLink to="/signup">Signup</RouterLink></li>
+          <!-- If logged in, show Logout -->
+          <li v-else><a @click="logout" class="logout">Logout</a></li>
+        </ul>
       </nav>
-    </div>
-  </header>
+    </aside>
 
-  <RouterView />
+    <!-- Main Content Area: Renders the RouterView -->
+    <main class="main-container">
+      <div class="main-inner-container">
+        <RouterView />
+      </div>
+    </main>
+  </div>
 </template>
 
+
+
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+
+/* Container that holds both the sidebar and main content */
+.app{
+  display: flex;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
 
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
+/* Logo styling */
 
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
 
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
 </style>

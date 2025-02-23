@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { onMounted, onBeforeUnmount } from 'vue'
 import IconGoogleLogo from '@/components/icons/IconGoogleLogo.vue'
+import { useAuthStore } from '@/stores/authStore.ts'
 
 // Define your trusted backend origin from your environment config
 const allowedOrigin = import.meta.env.VITE_API_URL
+
 
 const handleGoogleAuth = () => {
   // Open the OAuth login in a popup window
@@ -15,29 +17,29 @@ const handleGoogleAuth = () => {
 };
 
 const messageHandler = (event: MessageEvent) => {
-
-
   if (event.data && event.data.token) {
-    // Store the token securely (sessionStorage in this case)
-    sessionStorage.setItem("auth_token", event.data.token);
-    // Optionally, update your app state or redirect the user
-    window.location.reload();
+    sessionStorage.setItem('auth_token', event.data.token);
+    sessionStorage.setItem('user_role', event.data.user_role);
+    console.log('Token:', event.data.token);
+    useAuthStore().calculateRoute();
+    // window.location.reload();
+
   }
 };
 
+if(sessionStorage.getItem('auth_token'))
+{
+  useAuthStore().calculateRoute();
+}
+
 onMounted(async () => {
   window.addEventListener('message', messageHandler);
-
-
-
-  // Optional: Redirect if already authenticated
-  if (sessionStorage.getItem('auth_token')) {
-    window.location.href = '/about';
-  }
+  console.log('AuthItem mounted');
 });
 
 onBeforeUnmount(() => {
   window.removeEventListener('message', messageHandler);
+  console.log('AuthItem unmounted');
 });
 </script>
 

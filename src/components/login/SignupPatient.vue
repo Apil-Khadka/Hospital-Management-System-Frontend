@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import AuthItem from '@/components/login/AuthItem.vue'
 import { ref } from 'vue'
+import { useAuthStore } from '@/stores/authStore.ts'
 
 const firstname = ref('')
 const lastname = ref('')
@@ -27,12 +28,14 @@ const handleSubmit = async (event: Event) => {
   const data = await response.json()
   if(data)
   {
-    sessionStorage.setItem("auth_token", data.token);
+  useAuthStore().loginSuccess(data.token, data.user_role);
+  }
+
+  if(sessionStorage.getItem('auth_token'))
+  {
+    useAuthStore().calculateRoute();
   }
   console.log(data)
-  if (sessionStorage.getItem('auth_token')) {
-    window.location.href = '/about';
-  }
 }
 </script>
 

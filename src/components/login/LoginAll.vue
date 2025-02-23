@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import AuthItem from '@/components/login/AuthItem.vue'
 import { ref } from 'vue'
+import { useAuthStore } from '@/stores/authStore.ts'
+
+
 
 const email = ref('')
 const password = ref('')
-
 const deviceName = navigator.userAgent;
 
 const handleSubmit = async (event: Event) => {
@@ -22,16 +24,19 @@ const handleSubmit = async (event: Event) => {
       device: `${deviceName}`,
     }),
   })
-
   const data = await response.json()
+
   if(data)
   {
-    sessionStorage.setItem("auth_token", data.access_token);
+    useAuthStore().loginSuccess(data.access_token, data.user_role);
   }
+
+  if(sessionStorage.getItem('auth_token'))
+  {
+    useAuthStore().calculateRoute();
+  }
+
   console.log(data)
-  if (sessionStorage.getItem('auth_token')) {
-    window.location.href = '/about';
-  }
 }
 </script>
 
