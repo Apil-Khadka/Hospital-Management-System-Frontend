@@ -46,7 +46,3 @@ This frontend interacts with the Medimanage backend API, which provides endpoint
 ## 📄 License
 
 This project is open-source and available under the [MIT License](LICENSE).
-
-## 👨‍💻 Author
-
-Developed by [Your Name](https://github.com/your-username).
