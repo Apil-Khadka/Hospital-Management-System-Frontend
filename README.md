@@ -1,61 +1,52 @@
-# medimanage
+# Medimanage - Hospital Management System Frontend
 
-This template should help get you started developing with Vue 3 in Vite.
+🖥️ **Medimanage** is the frontend implementation of the Hospital Management System built using Vue.js with Vite. This repository provides an example reference for the frontend, while the actual backend API can be found at: [Medimanage Backend](https://github.com/Apil-Khadka/Hospital-Management-System).
 
-## Recommended IDE Setup
+## 📌 Features
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- User authentication (Login, Signup, Google OAuth)
+- Patient, Staff, and Department management
+- Appointment scheduling
+- Medication and Prescription tracking
+- Laboratory test and order management
+- Billing system
 
-## Type Support for `.vue` Imports in TS
+## 🛠️ Installation
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/your-username/Hospital-Management-System-Frontend.git
+   cd Hospital-Management-System-Frontend
+   ```
+2. **Install dependencies:**
+   ```sh
+   npm install
+   ```
+3. **Set up environment variables:**
+   Create a `.env` file in the root directory and configure API base URL:
+   ```sh
+   VITE_API_BASE_URL=http://your-backend-url/api
+   ```
+4. **Start the development server:**
+   ```sh
+   npm run dev
+   ```
 
-## Customize configuration
+## 📡 API Integration
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+This frontend interacts with the Medimanage backend API, which provides endpoints for user authentication, patient records, staff management, appointment booking, and more. Ensure that the backend is running before using the frontend.
 
-## Project Setup
+## 🛠️ Technologies Used
 
-```sh
-pnpm install
-```
+- Vue.js (Frontend Framework)
+- Vite (Build Tool)
+- Tailwind CSS (Styling)
+- Axios (HTTP Requests)
 
-### Compile and Hot-Reload for Development
+## 📄 License
 
-```sh
-pnpm dev
-```
+This project is open-source and available under the [MIT License](LICENSE).
 
-### Type-Check, Compile and Minify for Production
+## 👨‍💻 Author
 
-```sh
-pnpm build
-```
-
-### Run Headed Component Tests with [Cypress Component Testing](https://on.cypress.io/component)
-
-```sh
-pnpm test:unit:dev # or `pnpm test:unit` for headless testing
-```
-
-### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
-
-```sh
-pnpm test:e2e:dev
-```
-
-This runs the end-to-end tests against the Vite development server.
-It is much faster than the production build.
-
-But it's still recommended to test the production build with `test:e2e` before deploying (e.g. in CI environments):
-
-```sh
-pnpm build
-pnpm test:e2e
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-pnpm lint
-```
+Developed by [Your Name](https://github.com/your-username).
