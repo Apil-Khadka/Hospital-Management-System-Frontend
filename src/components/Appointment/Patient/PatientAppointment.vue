@@ -2,21 +2,12 @@
 import { ref } from 'vue'
 import PatientAppointmentCreate from './PatientAppointmentCreate.vue'
 import PatientAppointmentShow from './PatientAppointmentShow.vue'
-
-const isCreateOpen = ref(true)
-const isShowOpen = ref(false)
-
-function toggleView() {
-  isCreateOpen.value = !isCreateOpen.value
-  isShowOpen.value = !isShowOpen.value
-}
 </script>
 
 <template>
   <div class="appointment-container">
-    <button @click="toggleView">Toggle View</button>
-    <PatientAppointmentCreate v-if="isCreateOpen" />
-    <PatientAppointmentShow v-if="isShowOpen" />
+    <PatientAppointmentCreate />
+    <PatientAppointmentShow />
   </div>
 </template>
 
@@ -25,5 +16,8 @@ function toggleView() {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  max-height: 750px;
+  max-width: 900px;
+  overflow-y: auto;
 }
 </style>

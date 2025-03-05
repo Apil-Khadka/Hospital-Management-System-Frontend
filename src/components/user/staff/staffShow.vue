@@ -6,6 +6,7 @@ import { useAuthStore } from '@/stores/authStore.ts'
 
 const staffStore = useMethodStore()
 const authStore = useAuthStore()
+const staff = ref<any>(null)
 const staffId = ref<number>(0)
 const errorMessage = ref<string | null>(null)
 
@@ -13,13 +14,13 @@ onMounted(async () => {
   const userInfo = await authStore.userInfo()
   staffId.value = userInfo.user.detail.id
   await staffStore.fetchMethodDetail('staff', staffId.value)
-  console.log(staffStore.infoDetail)
+  staff.value = staffStore.getDetail('staff')?.data || null
 })
 
 async function handleDelete() {
   try {
-    if (staffStore.infoDetail && staffStore.infoDetail.data.id) {
-      await staffStore.deleteMethodDetail('staff', staffStore.infoDetail.data.id)
+    if (staff.id) {
+      await staffStore.deleteMethodDetail('staff', staff.id)
       window.location.reload()
     }
   } catch (error) {
@@ -35,38 +36,32 @@ async function handleDelete() {
     </template>
     <div v-if="staffStore.loading">Loading...</div>
     <div v-else>
-      <div v-if="staffStore.infoDetail">
-        <p><strong>User Name:</strong> {{ staffStore.infoDetail.data.user_name }}</p>
-        <p><strong>Department Name:</strong> {{ staffStore.infoDetail.data.department_name }}</p>
-        <p><strong>Specialization:</strong> {{ staffStore.infoDetail.data.specialization }}</p>
-        <p><strong>Qualification:</strong> {{ staffStore.infoDetail.data.qualification }}</p>
-        <p><strong>Salary: </strong>{{ staffStore.infoDetail.data.salary }}</p>
-        <p><strong>Experience Years:</strong> {{ staffStore.infoDetail.data.experience_years }}</p>
-        <p><strong>License Number:</strong> {{ staffStore.infoDetail.data.license_number }}</p>
-        <p><strong>Date of Birth:</strong> {{ staffStore.infoDetail.data.date_of_birth }}</p>
-        <p><strong>Gender:</strong> {{ staffStore.infoDetail.data.gender }}</p>
-        <p><strong>Phone Number:</strong> {{ staffStore.infoDetail.data.phone_number }}</p>
-        <p>
-          <strong>Temporary Address:</strong> {{ staffStore.infoDetail.data.temporary_address }}
-        </p>
-        <p>
-          <strong>Permanent Address:</strong> {{ staffStore.infoDetail.data.permanent_address }}
-        </p>
-        <p>
-          <strong>Employment Status:</strong> {{ staffStore.infoDetail.data.employment_status }}
-        </p>
-        <p><strong>Shift Details:</strong> {{ staffStore.infoDetail.data.shift_details }}</p>
+      <div v-if="staff">
+        <p><strong>User Name:</strong> {{ staff.user_name }}</p>
+        <p><strong>Department Name:</strong> {{ staff.department_name }}</p>
+        <p><strong>Specialization:</strong> {{ staff.specialization }}</p>
+        <p><strong>Qualification:</strong> {{ staff.qualification }}</p>
+        <p><strong>Salary: </strong>{{ staff.salary }}</p>
+        <p><strong>Experience Years:</strong> {{ staff.experience_years }}</p>
+        <p><strong>License Number:</strong> {{ staff.license_number }}</p>
+        <p><strong>Date of Birth:</strong> {{ staff.date_of_birth }}</p>
+        <p><strong>Gender:</strong> {{ staff.gender }}</p>
+        <p><strong>Phone Number:</strong> {{ staff.phone_number }}</p>
+        <p><strong>Temporary Address:</strong> {{ staff.temporary_address }}</p>
+        <p><strong>Permanent Address:</strong> {{ staff.permanent_address }}</p>
+        <p><strong>Employment Status:</strong> {{ staff.employment_status }}</p>
+        <p><strong>Shift Details:</strong> {{ staff.shift_details }}</p>
         <p>
           <strong>Emergency Contact Name:</strong>
-          {{ staffStore.infoDetail.data.emergency_contact_name }}
+          {{ staff.emergency_contact_name }}
         </p>
         <p>
           <strong>Emergency Contact Relationship:</strong>
-          {{ staffStore.infoDetail.data.emergency_contact_relationship }}
+          {{ staff.emergency_contact_relationship }}
         </p>
         <p>
           <strong>Emergency Contact Phone:</strong>
-          {{ staffStore.infoDetail.data.emergency_contact_phone }}
+          {{ staff.emergency_contact_phone }}
         </p>
       </div>
     </div>

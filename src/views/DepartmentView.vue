@@ -3,38 +3,38 @@ import { ref, onMounted, toRaw } from 'vue'
 import { useApiStore } from '@/stores/api.ts'
 
 interface HeadOfDepartment {
-  id: number;
-  firstname?: string;
-  lastname?: string;
-  email: string;
+  id: number
+  firstname?: string
+  lastname?: string
+  email: string
   detail: {
-    date_of_birth: string;
-    department_name: string;
-    emergency_contact_name: string;
-    emergency_contact_phone: string;
-    emergency_contact_relationship: string;
-    employment_status: string;
-    experience_years: number;
-    gender: string;
-    license_number: string;
-    permanent_address: string;
-    phone_number: string;
-    qualification: string;
-    shift_details: string;
-    specialization: string;
-    temporary_address: string;
-    user_name: string;
-  };
+    date_of_birth: string
+    department_name: string
+    emergency_contact_name: string
+    emergency_contact_phone: string
+    emergency_contact_relationship: string
+    employment_status: string
+    experience_years: number
+    gender: string
+    license_number: string
+    permanent_address: string
+    phone_number: string
+    qualification: string
+    shift_details: string
+    specialization: string
+    temporary_address: string
+    user_name: string
+  }
 }
 
 interface Department {
-  id: number;
-  name: string;
-  contact_number: string;
-  description: string;
-  email: string;
-  head_of_department: HeadOfDepartment;
-  location: string;
+  id: number
+  name: string
+  contact_number: string
+  description: string
+  email: string
+  head_of_department: HeadOfDepartment
+  location: string
 }
 
 const apiStore = useApiStore()
@@ -43,15 +43,16 @@ const loading = ref(true)
 
 onMounted(async () => {
   try {
-    const response = await apiStore.apiFetch(`${import.meta.env.VITE_API_URL}/api/department`, {
-      method: 'GET',
-    })
+    const response = await apiStore.apiFetch(
+      'GET',
+      `${import.meta.env.VITE_API_URL}/api/department`
+    )
     const responseData = await response.json()
     // Check if responseData has a "data" property and use it
     data.value = responseData.data || responseData
-    console.log("Fetched Data:", toRaw(data.value))
+    console.log('Fetched Data:', toRaw(data.value))
   } catch (error) {
-    console.error("Error fetching data:", error)
+    console.error('Error fetching data:', error)
   } finally {
     loading.value = false
   }
@@ -64,7 +65,11 @@ onMounted(async () => {
     <div v-if="loading" class="text-center">Loading...</div>
     <div v-else>
       <div v-if="data.length" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div v-for="department in data" :key="department.id" class="bg-white p-4 rounded-lg shadow-md">
+        <div
+          v-for="department in data"
+          :key="department.id"
+          class="bg-white p-4 rounded-lg shadow-md"
+        >
           <h2 class="text-xl font-semibold">{{ department.name }}</h2>
           <p class="text-sm text-gray-600">{{ department.description }}</p>
           <p class="mt-2"><strong>Contact:</strong> {{ department.contact_number }}</p>
@@ -73,11 +78,20 @@ onMounted(async () => {
 
           <div v-if="department.head_of_department" class="mt-4 p-3 border-t">
             <h3 class="text-lg font-medium">Head of Department</h3>
-            <p><strong>Name:</strong> {{ department.head_of_department.firstname }} {{ department.head_of_department.lastname }}</p>
+            <p>
+              <strong>Name:</strong> {{ department.head_of_department.firstname }}
+              {{ department.head_of_department.lastname }}
+            </p>
             <p><strong>Email:</strong> {{ department.head_of_department.email }}</p>
             <p><strong>Phone:</strong> {{ department.head_of_department.detail.phone_number }}</p>
-            <p><strong>Specialization:</strong> {{ department.head_of_department.detail.specialization }}</p>
-            <p><strong>Experience:</strong> {{ department.head_of_department.detail.experience_years }} years</p>
+            <p>
+              <strong>Specialization:</strong>
+              {{ department.head_of_department.detail.specialization }}
+            </p>
+            <p>
+              <strong>Experience:</strong>
+              {{ department.head_of_department.detail.experience_years }} years
+            </p>
           </div>
         </div>
       </div>
@@ -85,7 +99,6 @@ onMounted(async () => {
     </div>
   </div>
 </template>
-
 
 <style scoped lang="scss">
 .p-6 {

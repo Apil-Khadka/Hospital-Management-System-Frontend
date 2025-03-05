@@ -14,6 +14,7 @@ export const useMethodStore = defineStore('methods', () => {
       const apiStore = useApiStore()
       const response = await apiStore.apiFetch('GET', `api/${endpoint}`)
       infoAll.value[endpoint] = await response.json()
+      console.log(infoAll)
     } catch (error) {
       console.error('Error fetching all:', error)
     } finally {
@@ -76,6 +77,7 @@ export const useMethodStore = defineStore('methods', () => {
     return infoDetail.value[type] || [] // Return data or empty array if not fetched yet
   }
   function getDetailAll(type: string) {
+    console.log(infoAll.value[type])
     return infoAll.value[type] || [] // Return data or empty array if not fetched yet
   }
 

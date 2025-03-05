@@ -24,19 +24,25 @@ export const useAuthStore = defineStore('auth', {
           router.push('/admin')
           break
         case 'patient':
-          router.push('/patient')
+          router.push('/patient/profile')
           break
         case 'doctor':
-          router.push('/doctor')
+          router.push('/doctor/profile')
           break
         case 'nurse':
           router.push('/nurse')
           break
         case 'receptionist':
-          router.push('/receptionist')
+          router.push('/receptionist/profile')
+          break
+        case 'pathologist':
+          router.push('/pathologist/profile')
+          break
+        case 'pharmacist':
+          router.push('/pharmacist/profile')
           break
         default:
-          router.push('/dashboard')
+          router.push('/login')
       }
     },
     logout() {

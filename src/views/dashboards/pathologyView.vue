@@ -4,12 +4,13 @@
   <div class="sidebar_down">
     <ul>
       <li>
-        <RouterLink to="/receptionist/profile" active-class="active-link">Profile</RouterLink>
+        <RouterLink to="/pathologist/profile" active-class="active-link">Profile</RouterLink>
       </li>
       <li>
-        <RouterLink to="/receptionist/appointment" active-class="active-link"
-          >Appointment</RouterLink
-        >
+        <RouterLink to="/pathologist/laborder" active-class="active-link">Lab Orders</RouterLink>
+      </li>
+      <li>
+        <RouterLink to="/pathologist/labtest" active-class="active-link">Lab test</RouterLink>
       </li>
     </ul>
   </div>

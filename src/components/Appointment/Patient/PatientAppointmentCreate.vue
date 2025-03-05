@@ -33,7 +33,7 @@ onMounted(async () => {
 async function createAppointment() {
   const payload = { ...form.value }
   await staffStore.createMethodDetail('appointment', payload)
-  // window.location.reload()
+  window.location.reload()
 }
 </script>
 

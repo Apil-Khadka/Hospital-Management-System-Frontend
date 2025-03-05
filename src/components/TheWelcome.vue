@@ -1,94 +1,63 @@
 <script setup lang="ts">
 import WelcomeItem from './WelcomeItem.vue'
-import DocumentationIcon from './icons/IconDocumentation.vue'
-import ToolingIcon from './icons/IconTooling.vue'
-import EcosystemIcon from './icons/IconEcosystem.vue'
-import CommunityIcon from './icons/IconCommunity.vue'
-import SupportIcon from './icons/IconSupport.vue'
-
-const openReadmeInEditor = () => fetch('/__open-in-editor?file=README.md&editor=org.kde.kate')
+import HospitalIcon from './icons/IconHospital.vue'
+import StaffIcon from './icons/IconStaff.vue'
+import PatientIcon from './icons/IconPatient.vue'
+import AppointmentIcon from './icons/IconAppointment.vue'
+import DetailsIcon from './icons/IconDetails.vue'
 </script>
 
 <template>
   <WelcomeItem>
     <template #icon>
-      <DocumentationIcon />
+      <HospitalIcon />
     </template>
-    <template #heading>Documentation</template>
+    <template #heading>Medimanage</template>
 
-    Vue’s
-    <a href="https://vuejs.org/" target="_blank" rel="noopener">official documentation</a>
-    provides you with all information you need to get started.
+    Medimanage is an excellent solution for managing high-class hospitals. It offers comprehensive
+    tools to efficiently manage hospital staff, including doctors, nurses, and administrative
+    personnel.
   </WelcomeItem>
 
   <WelcomeItem>
     <template #icon>
-      <ToolingIcon />
+      <StaffIcon />
     </template>
-    <template #heading>Tooling</template>
+    <template #heading>Staff Management</template>
 
-    This project is served and bundled with
-    <a href="https://vite.dev/guide/features.html" target="_blank" rel="noopener">Vite</a>. The
-    recommended IDE setup is
-    <a href="https://code.visualstudio.com/" target="_blank" rel="noopener">VSCode</a>
-    +
-    <a href="https://github.com/johnsoncodehk/volar" target="_blank" rel="noopener">Volar</a>. If
-    you need to test your components and web pages, check out
-    <a href="https://vitest.dev/" target="_blank" rel="noopener">Vitest</a>
-    and
-    <a href="https://www.cypress.io/" target="_blank" rel="noopener">Cypress</a>
-    /
-    <a href="https://playwright.dev/" target="_blank" rel="noopener">Playwright</a>.
-
-    <br />
-
-    More instructions are available in
-    <a href="javascript:void(0)" @click="openReadmeInEditor"><code>README.md</code></a
-    >.
+    With Medimanage, you can easily organize and oversee your hospital staff. The platform allows
+    for scheduling, task assignments, and performance tracking, ensuring that your team operates
+    smoothly and effectively.
   </WelcomeItem>
 
   <WelcomeItem>
     <template #icon>
-      <EcosystemIcon />
+      <PatientIcon />
     </template>
-    <template #heading>Ecosystem</template>
+    <template #heading>Patient Management</template>
 
-    Get official tools and libraries for your project:
-    <a href="https://pinia.vuejs.org/" target="_blank" rel="noopener">Pinia</a>,
-    <a href="https://router.vuejs.org/" target="_blank" rel="noopener">Vue Router</a>,
-    <a href="https://test-utils.vuejs.org/" target="_blank" rel="noopener">Vue Test Utils</a>, and
-    <a href="https://github.com/vuejs/devtools" target="_blank" rel="noopener">Vue Dev Tools</a>. If
-    you need more resources, we suggest paying
-    <a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">Awesome Vue</a>
-    a visit.
+    Medimanage provides robust patient management features. Patients can register, update their
+    information, and access their medical records securely. This ensures that all patient data is
+    up-to-date and easily accessible.
   </WelcomeItem>
 
   <WelcomeItem>
     <template #icon>
-      <CommunityIcon />
+      <AppointmentIcon />
     </template>
-    <template #heading>Community</template>
+    <template #heading>Appointments</template>
 
-    Got stuck? Ask your question on
-    <a href="https://chat.vuejs.org" target="_blank" rel="noopener">Vue Land</a>
-    (our official Discord server), or
-    <a href="https://stackoverflow.com/questions/tagged/vue.js" target="_blank" rel="noopener"
-      >StackOverflow</a
-    >. You should also follow the official
-    <a href="https://bsky.app/profile/vuejs.org" target="_blank" rel="noopener">@vuejs.org</a>
-    Bluesky account or the
-    <a href="https://x.com/vuejs" target="_blank" rel="noopener">@vuejs</a>
-    X account for latest news in the Vue world.
+    Patients can conveniently book appointments through Medimanage. The system allows for easy
+    scheduling and rescheduling, helping to reduce no-shows and improve patient satisfaction.
   </WelcomeItem>
 
   <WelcomeItem>
     <template #icon>
-      <SupportIcon />
+      <DetailsIcon />
     </template>
-    <template #heading>Support Vue</template>
+    <template #heading>Patient Details</template>
 
-    As an independent project, Vue relies on community backing for its sustainability. You can help
-    us by
-    <a href="https://vuejs.org/sponsor/" target="_blank" rel="noopener">becoming a sponsor</a>.
+    Medimanage enables patients to view their appointment details, medical history, and treatment
+    plans. This transparency helps patients stay informed about their health and treatment progress.
   </WelcomeItem>
 </template>
